@@ -13,6 +13,6 @@ public class MybatisPlusConfig {
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInterceptor();
-        //MyBatis中的乐观锁插件
+        //MyBatis中的乐观锁插件，3.4版本的mybatis plus听说就不用这个bean了
     }
 }
