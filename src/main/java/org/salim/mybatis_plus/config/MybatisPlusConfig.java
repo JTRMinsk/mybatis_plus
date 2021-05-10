@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableTransactionManagement//开启事务管理
+@EnableTransactionManagement//开启事务管理，这个作用在哪里？
 @Configuration
 //@MapperScan("org.salim.mybatis_plus.mapper")//这个可以从Application类转移过来，通过Configuration注解
 public class MybatisPlusConfig {
