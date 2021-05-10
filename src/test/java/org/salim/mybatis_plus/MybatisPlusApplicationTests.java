@@ -45,4 +45,8 @@ public class MybatisPlusApplicationTests {
         System.out.println(result);
     }
 
+    public void testConcurrent () {
+
+    }
+
 }

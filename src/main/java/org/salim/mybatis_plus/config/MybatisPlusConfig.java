@@ -8,10 +8,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement//开启事务管理
 @Configuration
-@MapperScan("org.salim.mybatis_plus.mapper")//这个是为什么？
+//@MapperScan("org.salim.mybatis_plus.mapper")//这个可以从Application类转移过来，通过Configuration注解
 public class MybatisPlusConfig {
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInterceptor();
+        //MyBatis中的乐观锁插件
     }
 }
