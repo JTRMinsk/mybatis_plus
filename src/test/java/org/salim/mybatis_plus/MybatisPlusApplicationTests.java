@@ -1,6 +1,7 @@
 package org.salim.mybatis_plus;
 
-import org.assertj.core.util.Arrays;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.salim.mybatis_plus.entity.User;
 import org.salim.mybatis_plus.mapper.UserMapper;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 public class MybatisPlusApplicationTests {
@@ -94,6 +96,26 @@ public class MybatisPlusApplicationTests {
         List<User> users = userMapper.selectBatchIds(ids);//ids也可以直接用Arrays.asList(1, 2, 3)替换
 
         System.out.println(users);
+    }
+
+    @Test
+    public void testPagedSelect () {
+        //分页的意义是什么？分页实际上就是这么用的吗？是为了应对什么使用情况？
+        Page<User> page = new Page<>(1, 3);//在数据库中定点、定长的结果集（第一条开始的前三条）
+        userMapper.selectPage(page, null);//将这个定位和长度描述作为query条件发至数据库 Query Wrapper是什么？
+        //SELECT id,name,age,email,create_time,update_time FROM user LIMIT 0,3
+        //LIMIT 0,3
+        //userMapper.selectPage(page, null);  如果直接运行，会把结果集放到page对象中
+        page.getRecords().forEach(System.out::println);
+
+    }
+
+    @Test
+    public void testMappedPagedSelect () {
+        Page<Map<String, Object>> page = new Page<>(1, 5);
+        //得到不同类型的结果集，这个是Map，上面这个是User
+        IPage<Map<String, Object>> mapIPage = userMapper.selectMapsPage(page, null);
+        mapIPage.getRecords().forEach(System.out::println);
     }
 
 }
