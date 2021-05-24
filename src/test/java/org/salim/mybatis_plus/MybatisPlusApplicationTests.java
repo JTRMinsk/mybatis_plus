@@ -118,4 +118,6 @@ public class MybatisPlusApplicationTests {
         mapIPage.getRecords().forEach(System.out::println);
     }
 
+    //物理删除与逻辑删除
+
 }
