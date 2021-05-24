@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -119,5 +120,15 @@ public class MybatisPlusApplicationTests {
     }
 
     //物理删除与逻辑删除
+    @Test
+    public void testDeleteById () {
+        int result = userMapper.deleteById(1l);
+        System.out.println(result);
+    }
+
+    @Test
+    public void testBatchDelete () {
+        int result = userMapper.deleteBatchIds(Arrays.asList(2,3l));//为什么Long和Interger都可以?
+    }
 
 }
