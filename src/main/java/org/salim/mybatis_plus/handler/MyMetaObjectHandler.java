@@ -14,12 +14,13 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("createDt", new Date(), metaObject);
         this.setFieldValByName("updateDt", new Date(), metaObject);
         this.setFieldValByName("version", 1, metaObject);
-        //为了实现乐观锁，需要添加一个填充version默认值的代码（猜测，即使这里的值不加，也会自增）
+        //为了实现乐观锁，需要添加一个填充version默认值的代码, 这个version可以是查出来的，也可以是自己加的，但是乐观锁的原理是要先数据库差version
+        this.setFieldValByName("deleted", 0, metaObject);//默认首次insert的时候先
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         this.setFieldValByName("updateDt", new Date(), metaObject);
-        //为什么这里不用加Handler？
+        //为什么version的handle不是在这里？（不需要，拿来的是几，传回去的也是几）
     }
 }

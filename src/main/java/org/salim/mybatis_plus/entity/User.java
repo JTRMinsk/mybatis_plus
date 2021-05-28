@@ -31,4 +31,8 @@ public class User {
     //使用这样的乐观锁，总要拿到当前数据，是否增加了工作量？Y
     //乐观锁（保存结果前先检查数据是否改动，如果改动，重新操作），悲观锁（一方操作的时候完全锁死数据，不让其他人操作）
 
+    @TableLogic//这里怎么知道是逻辑删除的flag？？？这个注解就是表示逻辑删除
+    @TableField(fill = FieldFill.INSERT)
+    private Integer deleted;
+
 }

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 //@MapperScan("org.salim.mybatis_plus.mapper")//这个可以从Application类转移过来，通过Configuration注解
 public class MybatisPlusConfig {
-    //TODO: Interceptor 是什么东西？
+    //TODO: Interceptor 在mybatis plus里面 是什么东西？
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInterceptor();
@@ -22,4 +22,9 @@ public class MybatisPlusConfig {
         return new PaginationInterceptor();
         //MyBatis PLUS中的分页插件
     }
+
+//    @Bean
+//    public ISqlInjector sqlInjector() {
+//        return new LogicSqlInjector();
+//    }//3.x版本的mybatis plus不需要这个插件了，现在是3.3.1
 }

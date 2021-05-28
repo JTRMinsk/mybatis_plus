@@ -8,10 +8,7 @@ import org.salim.mybatis_plus.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SpringBootTest
 public class MybatisPlusApplicationTests {
@@ -32,7 +29,7 @@ public class MybatisPlusApplicationTests {
         // 建表时有已经定了ID是主键,不传id的时候会随便产生一个ID（id=1379733536392093698）不连贯的分布式ID，雪花算法
         //需要在entity中另外配置主键自增；数据库建表的时候也要配置,并且重新设置自增的基数
         user.setAge(33);
-        user.setName("version test3");
+        user.setName("logic delete test3");
         user.setEmail("1021264431@qq.com");
 
         int result = userMapper.insert(user);
@@ -43,8 +40,8 @@ public class MybatisPlusApplicationTests {
     @Test
     public void testUpdate() {
         User user = new User();
-        user.setId(11l);
-        user.setAge(40);
+        user.setId(12l);
+        user.setDeleted(0);
 
         int result = userMapper.updateById(user);//为什么没有updateByXXX, id由@TableId(type = IdType.AUTO)
         System.out.println(result);
@@ -129,6 +126,32 @@ public class MybatisPlusApplicationTests {
     @Test
     public void testBatchDelete () {
         int result = userMapper.deleteBatchIds(Arrays.asList(2,3l));//为什么Long和Interger都可以?
+    }
+
+
+    @Test
+    public void testDeleteByMap () {//条件删除,如何使用与/或条件？
+        Map<String, Object> map = new HashMap<>();
+        //map.put("name", "sandy");//不区分大小写
+        //map.put("email", "jtrkiev@yahoo.com");//不同column的条件是
+        //map.put("name", "Billie");//因为是Map，所以不能输入相同key
+        //map.put();//复杂条件找不到内容？
+
+        map.put("name", "logic delete test3");//只要满足条件，可以删除多条
+
+        int result = userMapper.deleteByMap(map);//这里的Map指的就是Map类
+    }
+
+    @Test
+    public void testLogicDelete () {
+        //需要添加User字段，加注解@TableLogic标示逻辑删除的字段
+        //需要在handle里面给insert的内容添加初始值
+        //需要配置delete flag的赋值规则（目前是用0/1作为默认值，所以不用加）：
+            //mybatis-plus.global-config.db-config.logic-delete-value=1
+            //mybatis-plus.global-config.db-config.logic-not-delete-value=0
+        //3.x以前版本的mybatis Plus需要在Config里面增加Bean：LogicSqlInjector()来开启功能
+
+        //一旦Mark删除，不能通过update来重置回来，也不能被search到
     }
 
 }
