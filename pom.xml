@@ -46,6 +46,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!--性能分析插件mybatis plus3.2.0版本以上的只能使用第三方插件-->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>

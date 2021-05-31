@@ -1,5 +1,7 @@
 package org.salim.mybatis_plus;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
@@ -28,9 +30,9 @@ public class MybatisPlusApplicationTests {
         //user.setId(0l);
         // 建表时有已经定了ID是主键,不传id的时候会随便产生一个ID（id=1379733536392093698）不连贯的分布式ID，雪花算法
         //需要在entity中另外配置主键自增；数据库建表的时候也要配置,并且重新设置自增的基数
-        user.setAge(33);
-        user.setName("logic delete test3");
-        user.setEmail("1021264431@qq.com");
+        user.setAge(22);
+        user.setName("wrapper test 2");
+        user.setEmail("ABC@qq.com");
 
         int result = userMapper.insert(user);
         System.out.println(result);
@@ -150,8 +152,38 @@ public class MybatisPlusApplicationTests {
             //mybatis-plus.global-config.db-config.logic-delete-value=1
             //mybatis-plus.global-config.db-config.logic-not-delete-value=0
         //3.x以前版本的mybatis Plus需要在Config里面增加Bean：LogicSqlInjector()来开启功能
+        //使用正常的删除逻辑操作即可
+        //delete字段为NULL的也不会被
 
         //一旦Mark删除，不能通过update来重置回来，也不能被search到
+    }
+
+    @Test
+    public void testQueryWrapper () {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        //queryWrapper这里的是一个自定义的条件
+        queryWrapper
+                .isNotNull("version")
+                //.isNull("")
+                .eq("email","ABC@qq.com")//等于
+                .ge("age", 23);//大于等于
+        //EQ： EQUAL 等于
+        //NE： NOT EQUAL 不等于
+        //GT： GREATER THAN 大于　
+        //LT ： LESS THAN 小于
+        //GE： GREATER THAN OR EQUAL 大于等于
+        //LE： LESS THAN OR EQUAL 小于等于
+
+        List<Map<String, Object>> usersA = userMapper.selectMaps(queryWrapper);
+        List<User> usersB = userMapper.selectList(queryWrapper);
+
+        System.out.println(usersA);
+        System.out.println(usersB);
+    }
+
+    @Test
+    public void testUpdateWrapper () {
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
     }
 
 }

@@ -27,4 +27,10 @@ public class MybatisPlusConfig {
 //    public ISqlInjector sqlInjector() {
 //        return new LogicSqlInjector();
 //    }//3.x版本的mybatis plus不需要这个插件了，现在是3.3.1
+
+//    @Bean
+//    @Profile({"dev", "test"})
+//    public PerformanceInterceptor performanceInterceptor () {
+//        //3.2.0之后的版本就没有这项了，要用第三方工具
+//    }
 }
