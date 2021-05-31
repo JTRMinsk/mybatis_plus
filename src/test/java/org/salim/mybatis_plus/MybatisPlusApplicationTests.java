@@ -183,7 +183,7 @@ public class MybatisPlusApplicationTests {
 
     @Test
     public void testUpdateWrapper () {
-        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();//这里的Wrapper用得也不一样
     }
 
 }
